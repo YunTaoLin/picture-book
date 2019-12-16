@@ -1,33 +1,33 @@
 <template>
-  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <div :id="id" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li :data-target="'#'+id"  :data-slide-to="index" :class="{active: index==0}" v-for="(item,index) in img" :key="item"></li>
       </ol>
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img :src="img[0]" class="d-block w-100" alt="輪播圖片">
+        <div class="carousel-item" :class="{active: index==0}" v-for="(item,index) in img" :key="item">
+          <img :src="item" class="d-block w-100" alt="輪播圖片">
           <div class="inner-text">
-            <h3>歡慶15周年慶全館</h3>
-            <h2><span>85</span> 折</h2>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img :src="img[1]" class="d-block w-100" alt="輪播圖片">
-          <div class="inner-text">
-            <h3>聖誕年度好禮選購</h3>
-            <h2>滿千送書套</h2>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img :src="img[2]" class="d-block w-100" alt="輪播圖片">
-          <div class="inner-text">
-            <h3 >學齡前兒童繪本</h3>
-            <h2  ><span>75</span> 折</h2>
+            <div class="text1">
+              <p>熱銷商品</p>
+            </div>
+            <div class="text2">
+              <p>方方繪本精選<br>年度排行榜熱銷商品</p>
+            </div>
           </div>
         </div>
       </div>
+      <a class="carousel-control-prev" :href="'#'+id" role="button" data-slide="prev">
+        <div class="btn-box">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </div>
+      </a>
+      <a class="carousel-control-next" :href="'#'+id"  role="button" data-slide="next">
+        <div class="btn-box">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </div>
+      </a>
     </div>
 </template>
 
@@ -36,6 +36,9 @@ export default {
   props:{
     img:{
       type:Array
+    },
+    id:{
+      type:String
     }
   }
 
@@ -46,13 +49,13 @@ export default {
 @import '../assets/scss/_base.scss' ;
 // banner
 .carousel-item{
-  height: 95vh ;
+  height: 55vh ;
   position: relative;
   @media (max-width:1023px) {
-    height: 60vh;
+    height: 45vh;
   }
   @media (max-width:767px) {
-    height: 40vh;
+    height: 35vh;
   }
   img{
     width: 100%;
@@ -72,19 +75,41 @@ export default {
       top: 0;
     }
     .inner-text{
-      width: auto;
+      width: 27%;
+      height: 90%;
       text-align: left;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      flex-direction: column;
-      letter-spacing: 8px;
       position: absolute;
-      top: 55%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      z-index: 3;
+      top: 0;
+      right: 5%;
+      z-index: 1;
       font-family: $tw-font;
+      .text1{
+        width: 100%;
+        height: 40%;
+        // background: url('http://picn64.huitu.com/pic/20140715/20140715131454681900_0.jpg');
+        background-color: #C9A491;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        p{
+          font-size: 48px;
+          font-weight: 700;
+          color: #fff;
+        }
+      }
+      .text2{
+        width: 100%;
+        height: 60%;
+        background-color: #fff;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        p{
+          font-size: 24px;
+          font-weight: 700;
+          color: #756566;
+        }
+      }
       h3{
         color:#eee;
         font-size: 68px;
@@ -169,5 +194,29 @@ export default {
       }
     }
 }
- 
+.btn-box{
+  border: 2px solid #aaa;
+  background-color: #aaa;
+  padding: 0px;
+  border-radius: 100%;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width:767px) {
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+  }
+}
+.carousel-control-prev,
+.carousel-control-next{
+  transition: .8s;
+  opacity: 0;
+  &:hover{
+    opacity: 1;
+  }
+}
+
 </style>
