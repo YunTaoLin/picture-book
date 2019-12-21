@@ -54,9 +54,12 @@ export default {
   data(){
     return {
       carouselImg:[
-        'https://www.openbook.org.tw/sites/default/files/styles/article_main_image/public/field/image/ju_ren_de_shi_jian_.jpg?itok=MDOjeN9o',
         'https://imgs.cwgv.com.tw/articles/81/6181/preview/6181.png',
-        'https://artouch.com/userfiles/sm/sm1200675_images_EC8/799/2018113058066141.jpg'
+        'https://img.udnfunlife.com/image/product/DS004830/20180920140224563.jpg?t=20180920140705',
+        'https://artouch.com/userfiles/sm/sm1200675_images_EC8/799/2018113058066141.jpg',
+        'https://fsv.cmoney.tw/cmstatic/notes/capture/712894/20170828152443985.jpg'
+        
+
       ],
       topicImg:[
         'https://pic.pimg.tw/bonnie6068/1484106268-2671189120_n.jpg',

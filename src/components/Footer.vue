@@ -9,11 +9,11 @@
                 <div class="info-inner">
                     <p>
                         方方繪本 - 官方購物網站<br>
-                        提供各種造型、髮質護理服務
+                        本網站為模擬專案，純屬個人練習製作。
                     </p>
                     <p>
-                        平日晚上與假日顧客較多<br>
-                        <span>Weekdays and holidays</span>
+                        網站內所有商品皆為虛構，並非實際販售。<br>
+                        <span>All products on the web are not actually sold.</span>
                         
                     </p>
                 </div>
@@ -24,11 +24,11 @@
         </div>
          <div class="container">
              <nav>
+                <router-link to="/serve">商品列表</router-link>
                 <router-link to="/serve">品牌故事</router-link>
                 <router-link to="/popularCut">門市資訊</router-link>
                 <router-link to="/location">寄送說明</router-link>
                 <a href="javascript:;" @click="FB">聯絡我們</a>
-                <router-link to="/reservation">帳戶中心</router-link>
             </nav>
          </div>
         <div class="coyRight">Copyright © YunTao.Lin  <a href="https://github.com/YunTaoLin/play-hair"> Github  </a></div>
@@ -48,7 +48,7 @@ export default {
 <style lang="scss" scoped>
 @import '../assets/scss/_base.scss' ;
     .footer{
-      margin-top: 60px;
+        margin-top: 60px;
         padding: 40px 10vw 20px;
         background-color: rgb(124, 103, 78);
         font-family: '微軟正黑體';

@@ -4,27 +4,35 @@
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img :src="img[0]" class="d-block w-100" alt="輪播圖片">
-          <div class="inner-text">
-            <h3>歡慶15周年慶全館</h3>
-            <h2><span>85</span> 折</h2>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img :src="img[1]" class="d-block w-100" alt="輪播圖片">
           <div class="inner-text">
             <h3>聖誕年度好禮選購</h3>
             <h2>滿千送書套</h2>
           </div>
         </div>
         <div class="carousel-item">
+          <img :src="img[1]" class="d-block w-100" alt="輪播圖片">
+          <div class="inner-text">
+            <h3>歡慶15周年慶全館</h3>
+            <h2><span>85</span> 折</h2>
+          </div>
+        </div>
+        <div class="carousel-item">
           <img :src="img[2]" class="d-block w-100" alt="輪播圖片">
           <div class="inner-text">
-            <h3 >學齡前兒童繪本</h3>
-            <h2  ><span>75</span> 折</h2>
+            <h3>學齡前兒童繪本</h3>
+            <h2><span>75</span> 折</h2>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img :src="img[3]" class="d-block w-100" alt="輪播圖片">
+          <div class="inner-text">
+            <h3>眾多精選商品</h3>
+            <h2>全新上架</h2>
           </div>
         </div>
       </div>
@@ -46,7 +54,7 @@ export default {
 @import '../assets/scss/_base.scss' ;
 // banner
 .carousel-item{
-  height: 95vh ;
+  height: 105vh ;
   position: relative;
   @media (max-width:1023px) {
     height: 60vh;
