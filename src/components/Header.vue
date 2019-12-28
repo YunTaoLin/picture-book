@@ -8,13 +8,13 @@
         <div class="navbar">
           <ul>
             <li class="commodity"><a href="javascript:;">商品分類<i class="fa fa-chevron-down" aria-hidden="true"></i></a>
-              <ul>
-                <li><router-link to="/commodity/total">全部商品</router-link></li>
-                <li><router-link to="/commodity/season">當季精選繪本</router-link></li>
-                <li><router-link to="/commodity/elementary">0~6歲幼兒繪本</router-link></li>
-                <li><router-link to="/commodity/junior">6~12歲兒童繪本</router-link></li>
-                <li><router-link to="/commodity/senior">青少年繪本</router-link></li>
-                <li><router-link to="/commodity/other">其他周邊商品</router-link></li>
+              <ul :class="{fadeOut:fadeOut}">
+                <li @click="toFadeOut"><router-link to="/commodity/total" >全部商品</router-link></li>
+                <li @click="toFadeOut"><router-link to="/commodity/season" >當季精選繪本</router-link></li>
+                <li @click="toFadeOut"><router-link to="/commodity/elementary" >0~6歲幼兒繪本</router-link></li>
+                <li @click="toFadeOut"><router-link to="/commodity/junior" >6~12歲兒童繪本</router-link></li>
+                <li @click="toFadeOut"><router-link to="/commodity/senior" >少年繪本</router-link></li>
+                <li @click="toFadeOut"><router-link to="/commodity/other" >其他周邊商品</router-link></li>
               </ul>
             </li>
             <li><router-link to="/story">品牌故事</router-link></li>
@@ -30,25 +30,35 @@
                  <span>會員登入/註冊</span>
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
               </router-link>
+              <div class="cart_control">
+                <a href="#" class="cart_btn">
+                  <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </a>
+                <p class="cart_items">0</p>
+              </div>
              </div>
+             
             <div v-else>
               <div class="user_control" >
                 <a href="#" class="user_btn">
                   <span>{{'Hi '+username}}</span>
                   <i class="fa fa-user-circle" aria-hidden="true"></i>
                 </a>  
-                <ul>
-                  <li>我的收藏</li>
-                  <li>訂單查詢</li>
-                  <li>資料修改</li>
-                  <li ><a href="javascript:;" @click="logout">登出帳號</a></li>
+                <ul :class="{fadeOut:fadeOut}">
+                  <li @click="toFadeOut"><router-link to="/favorite">我的收藏</router-link></li>
+                  <li @click="toFadeOut">訂單查詢</li>
+                  <li @click="toFadeOut"><router-link to="/profile">會員資料</router-link></li>
+                  <li @click="toFadeOut"><a href="javascript:;" @click="logout">登出帳號</a></li>
                 </ul>  
               </div>
               <div class="cart_control">
-                <a href="#" class="cart_btn">
+                <router-link to="/cart" class="cart_btn">
                   <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                </a>
-                <p class="cart_items">0</p>
+                  <p class="cart_items">{{cartNumber}}</p>
+                </router-link>
+                <ul :class="{fadeOut:fadeOut}">
+                  <li @click="toFadeOut"><router-link to="/cart">前往結帳</router-link></li>
+                </ul>  
               </div>
             </div>
           </div>
@@ -78,7 +88,8 @@ export default {
   data(){
     return {
       active: true,
-      bgc:false
+      bgc:false,
+      fadeOut:false
     }
   },
   methods:{
@@ -93,7 +104,12 @@ export default {
       alert('已成功登出')
       this.$router.push('/login')
       this.$store.commit('logout')
-      localStorage.removeItem('user')
+    },
+    toFadeOut(){
+      this.fadeOut=true;
+      setTimeout(()=>{
+        this.fadeOut=false
+      },1000)
     }
   },
   computed:{
@@ -101,6 +117,13 @@ export default {
       if(this.$store.state.user.firstname){
         return this.$store.state.user.firstname
       }else return ''
+    },
+    cartNumber(){
+      let total=0
+      this.$store.state.cart.forEach(item => {
+        total += parseInt(item.number)
+      });
+      return total
     }
   },
   watch:{
@@ -159,7 +182,7 @@ export default {
     width: 100%;
     
     .navbar{
-      flex:4;
+      flex:8;
       display: flex;
       justify-content: center;
       > ul{
@@ -168,7 +191,6 @@ export default {
         margin:0;
         list-style-type: none;
         line-height: 100px;
-        margin-right: 40px;
         > li >a{
           display: inline-block;
           margin-top: 12px;
@@ -199,9 +221,10 @@ export default {
       }
     }
     .user_area{
-      flex:1;
+      flex:3;
       display: flex;
       flex-direction: column;
+      padding-top: 8px;
       .userbar{
         display: flex;
         justify-content: flex-end;
@@ -226,11 +249,13 @@ export default {
       }
       .search_bar{
         flex:2;
+
       }
     }
   }
 
-.user_control{
+.user_control,
+.cart_control{
   position: relative;
   &:hover{
     ul{
@@ -253,6 +278,10 @@ export default {
     background-color: #fefefe;
     box-shadow: 0 1px 1px 1px #dedede;
     transition: .2s;
+    &.fadeOut{
+      opacity: 0;
+      visibility: hidden !important;
+    }
     li{
       padding: 4px 12px;
       a{
@@ -268,18 +297,21 @@ export default {
     }
   }
   a{
-    font-size: 14px;
-    margin-right: 1em;
     text-decoration: none;
     color: #fefefe;
     span{
-      margin-right: 1em;
+      margin-right: .5em;
+      font-size: 14px;
     }
   }
 }
 
 .cart_control{
   margin-left: 12px;
+  a{
+    display: flex;
+    text-decoration: none;
+  }
   p{
     margin:0 4px ;
     padding: 2px 12px;
@@ -287,17 +319,29 @@ export default {
     border-radius: 100px;
     font-size: 14px;
     color: #fefefe;
-
   }
+  // ul{
+  //   background-color: rgb(218, 230, 255);
+  //   &:hover li{
+  //     background-color: rgb(203, 220, 255); 
+  //   }
+  //   li a{
+  //     color: #000;
+  //     font-weight: 700;
+  //   }
+    
+  // }
 }
 
 .search_bar{
+  padding-left: 80px;
+  padding-top: 4px;
   .search_form{
     display: flex;
     align-items: center;
     padding: 0 15px;
     background-color: #e4e2e2;
-    // border: 1px solid #000;
+    max-width: 200px;
     border-radius: 100px;
     input{
       background-color: transparent;
@@ -337,6 +381,10 @@ export default {
     list-style-type: none;
     text-align: left;
     border: 1px solid #ccc;
+    &.fadeOut{
+      opacity: 0;
+      visibility: hidden !important;
+    }
     li{
       width: 10em;
       height: 2.5em;

@@ -1,6 +1,7 @@
 <template>
-  <div class="commodity">
+  <div class="commodity wow fadeIn">
     <div class="container">
+      
       <div class="myBreadcrumb">
         <router-link to='/'>首頁</router-link>
         <span class="icon">></span>
@@ -9,6 +10,7 @@
       <hr>
       <div class="row">
         <div class="col-3">
+          <h2 class="title">商品分類</h2>
           <ul class="menu">
             <li><router-link to="/commodity/total">全部商品 | 好書通通有</router-link></li>
             <li><router-link to="/commodity/season">精選繪本 | 當季特賣</router-link></li>
@@ -17,6 +19,7 @@
             <li><router-link to="/commodity/senior">少年繪本 | 適合12歲以上</router-link></li>
             <li><router-link to="/commodity/other">其他周邊商品</router-link></li>
           </ul>
+          <recommend class="mt-5" :list="recommoendList"/>
         </div>
         <div class="col-9">
           <router-view />
@@ -24,11 +27,22 @@
       </div>
       
     </div>
+    <myFooter />
   </div>
 </template>
 
 <script>
+import recommend from '../components/Recommend.vue'
+import myFooter from '../components/Footer'
 export default {
+  components:{
+    recommend,myFooter
+  },
+  data(){
+    return {
+      recommoendList: []
+    }
+  },
   computed:{
     classify(){
       let classify=''
@@ -42,6 +56,22 @@ export default {
       }
       return classify
     }
+  },
+  methods:{
+    getRecommoendList(){
+      // let length = this.$store.state.commodity.length  
+      if(this.$route.name == 'total'){
+      this.recommoendList =  this.$store.state.commodity.slice(5,10)
+      }else{
+        this.recommoendList = this.$store.getters[this.$route.name].slice(5,10)
+      }
+    }
+  },
+  created(){
+    this.getRecommoendList()
+  },
+  beforeUpdate(){
+    this.getRecommoendList()
   }
 
 }
@@ -63,13 +93,19 @@ export default {
       margin: 0 12px;
     }
   }
+  .title{
+    font-size: 20px;
+    font-weight: 700;
+    text-align: left;
+    color: $th4-color;
+  }
   .menu{
     padding-inline-start:0;
     text-align: left;
     list-style: none;
     font-size: 14px;
     li{
-      margin: 12px 0;
+      margin: 16px 0;
       a{
         color: $primary-color;
         text-decoration: none;
@@ -80,6 +116,20 @@ export default {
         }
       }
     }
+  }
+}
+
+.banner{
+  width: 100%;
+  padding-top: 35%;
+  position: relative;
+  img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
   }
 }
 </style>

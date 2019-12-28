@@ -24,11 +24,11 @@
         </div>
          <div class="container">
              <nav>
-                <router-link to="/serve">商品列表</router-link>
-                <router-link to="/serve">品牌故事</router-link>
-                <router-link to="/popularCut">門市資訊</router-link>
-                <router-link to="/location">寄送說明</router-link>
-                <a href="javascript:;" @click="FB">聯絡我們</a>
+                <router-link to="/commodity">商品列表</router-link>
+                <router-link to="/story">品牌故事</router-link>
+                <router-link to="/store">門市資訊</router-link>
+                <router-link to="/send">寄送說明</router-link>
+                <router-link to="/contact">聯絡我們</router-link>
             </nav>
          </div>
         <div class="coyRight">Copyright © YunTao.Lin  <a href="https://github.com/YunTaoLin/play-hair"> Github  </a></div>

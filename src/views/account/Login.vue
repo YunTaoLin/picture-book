@@ -92,7 +92,7 @@ export default {
       if(!this.login.email) return alert('請輸入email');
       if(!this.login.password) return alert('請輸入密碼');
       this.loading=true;
-      $.ajax({
+       $.ajax({
         url: 'http://127.0.0.1:3000/ajax/login',
         type: 'post',
         datatype: 'json',
@@ -102,10 +102,15 @@ export default {
         this.loading=false;
         console.log(res)
         if(res.err_code==0){
-          this.$store.commit('login',res.user)
-          localStorage.setItem('user',JSON.stringify(res.user))
           alert('歡迎回來'+res.user.firstname+'！')
-          this.$router.replace('/')
+          if(this.$store.state.cart.length>0){
+            if(!confirm('購物車目前有商品，是否要合併到會員購物車內?')){
+              this.$store.commit('removeCart')
+            }
+          }
+          this.$store.commit('login',res.user)
+          this.$router.go(-1)
+          this.$store.dispatch('a_updateCart')
         }else if(res.err_code==1){
           alert('帳號或密碼錯誤')
         }else{
@@ -135,7 +140,7 @@ export default {
           this.$store.commit('login',res.user)
           localStorage.setItem('user',JSON.stringify(res.user))
           alert('註冊成功！ '+res.user.firstname+'，歡迎您加入方方繪本')
-          this.$router.replace('/')
+          this.$router.go(-1)
         }else if(res.err_code==1){
           alert('該信箱已被註冊過囉')
         }else{

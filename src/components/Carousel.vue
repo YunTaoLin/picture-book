@@ -18,14 +18,14 @@
           <img :src="img[1]" class="d-block w-100" alt="輪播圖片">
           <div class="inner-text">
             <h3>歡慶15周年慶全館</h3>
-            <h2><span>85</span> 折</h2>
+            <h2><span>85</span> 折起</h2>
           </div>
         </div>
         <div class="carousel-item">
           <img :src="img[2]" class="d-block w-100" alt="輪播圖片">
           <div class="inner-text">
             <h3>學齡前兒童繪本</h3>
-            <h2><span>75</span> 折</h2>
+            <h2><span>75</span> 折起</h2>
           </div>
         </div>
         <div class="carousel-item">

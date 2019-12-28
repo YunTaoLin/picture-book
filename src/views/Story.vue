@@ -73,9 +73,7 @@ export default {
         color: #000;
         font-size: 18px;
         text-align: center;
-        span{
-          font-weight: 700;
-        }
+        font-weight: 700;
       }
       &.founder_info{
         height: 100%;

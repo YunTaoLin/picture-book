@@ -21,9 +21,9 @@ export default {
     let user = JSON.parse(localStorage.getItem('user'))
     if(user){
       this.$store.commit('login',user)
-    }else{
-      console.log('沒登入')
     }
+    this.$store.dispatch('a_getCommodity')
+    this.$store.commit('getCart')
   },
   mounted(){
     if(this.$route.name=="home"){
