@@ -31,10 +31,13 @@
                 <i class="fa fa-user-circle" aria-hidden="true"></i>
               </router-link>
               <div class="cart_control">
-                <a href="#" class="cart_btn">
+                <router-link to="/cart" class="cart_btn">
                   <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                </a>
-                <p class="cart_items">0</p>
+                  <p class="cart_items">{{cartNumber}}</p>
+                </router-link>
+                <ul :class="{fadeOut:fadeOut}">
+                  <li @click="toFadeOut"><router-link to="/cart">登入並結帳</router-link></li>
+                </ul>  
               </div>
              </div>
              
@@ -46,7 +49,7 @@
                 </a>  
                 <ul :class="{fadeOut:fadeOut}">
                   <li @click="toFadeOut"><router-link to="/favorite">我的收藏</router-link></li>
-                  <li @click="toFadeOut">訂單查詢</li>
+                  <li @click="toFadeOut"><router-link to="/order">訂單查詢</router-link></li>
                   <li @click="toFadeOut"><router-link to="/profile">會員資料</router-link></li>
                   <li @click="toFadeOut"><a href="javascript:;" @click="logout">登出帳號</a></li>
                 </ul>  
@@ -64,10 +67,10 @@
           </div>
           <div class="search_bar">
             <form class="search_form">
-              <input type="search" placeholder="搜尋">
-              <a href="#">
+              <input type="text" v-model.trim="search" placeholder="搜尋">
+              <router-link :to="'/search/'+search">
                 <i class="fa fa-search" aria-hidden="true"></i>
-              </a>
+              </router-link>
             </form>
           </div>
         </div>
@@ -89,7 +92,8 @@ export default {
     return {
       active: true,
       bgc:false,
-      fadeOut:false
+      fadeOut:false,
+      search:''
     }
   },
   methods:{

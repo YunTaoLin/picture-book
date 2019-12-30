@@ -28,7 +28,7 @@
             <a href="javascript:;" v-else @click="like" title="追蹤商品"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
           </div>
           <div class="cart">
-            <a href="javascript:;" title="加入購物車"><i class="fa fa-cart-plus" aria-hidden="true" ></i></a>
+            <a href="javascript:;" @click="addCart"  :class="{active:isCart}" title="加入購物車" ><i class="fa fa-cart-plus" aria-hidden="true" ></i></a>
           </div>
         </div>
       </div>
@@ -44,7 +44,8 @@ export default {
   },
   data(){
     return {
-      isLike:false
+      isLike:false,
+      isCart:false
     }
   },
   methods:{
@@ -73,7 +74,6 @@ export default {
         this.$emit('like','3')
       }
       
-      
     },
     classify(type){
       let classify
@@ -94,6 +94,22 @@ export default {
           classify='其他周邊'
       }
       return classify
+    },
+    addCart(){
+      //先更新本地端
+      console.log('addcart')
+      this.$store.commit('addCart',{
+        id:this.commodity._id,
+        number:1,
+        checked:true
+      })
+      localStorage.setItem('cart',JSON.stringify(this.$store.state.cart))
+      //若有登入舊更新遠端
+      if(this.$store.state.user._id){
+        this.$store.dispatch('a_updateCart')
+      }
+      this.$emit('like','4')
+      this.isCart=true;
     }
   },
   created(){
@@ -101,6 +117,9 @@ export default {
       if(this.$store.state.user.like.some(item=>{return item ==this.commodity._id})){
         this.isLike = true;
       }
+    }
+    if(this.$store.state.cart.some(item=>{return item.id ==this.commodity._id})){
+        this.isCart = true;
     }
   }
 

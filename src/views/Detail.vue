@@ -77,8 +77,7 @@
       <p>已取消追蹤</p>
     </div>
     <div class="myToast cart" v-if="toastContent_cart">
-      <p>已將商品加入購物車<br><span v-if="!$store.state.user._id">提醒您：登入後才可保存購物車內的資料</span></p>
-      
+      <p>已將商品加入購物車<br><span v-if="!$store.state.user._id">提醒您：登入後才可保存購物車內的資料</span></p> 
     </div>
     <div class="myToast noFadeOut" v-if="toastContent_login">
       <p>登入後才可以追蹤商品喔</p>
@@ -164,9 +163,11 @@ export default {
     },
     addCart(){
       //先更新本地端
+      console.log('addcart')
       this.$store.commit('addCart',{
         id:this.id,
         number:this.number,
+        checked:true
       })
       localStorage.setItem('cart',JSON.stringify(this.$store.state.cart))
       //若有登入舊更新遠端

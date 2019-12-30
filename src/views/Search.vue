@@ -1,89 +1,65 @@
 <template>
-  <div class="favorite">
-    <Sidebar theTitle="我的收藏">
-      <h1>我的收藏</h1>
-      <ul v-if="favoriteList.length >0 ">
-        <li v-for="item in favoriteList" :key="item._id">
-          <div class="item">
-              <div class="pic mr-3">
-                <router-link :to="'/detail/'+item._id">
-                <img :src="item.img" alt="商品圖片">
-                </router-link>
-              </div>
-            
-            <div class="info">
-              <div class="title">
-                <router-link :to="'/detail/'+item._id">{{item.title}}</router-link>
-              </div>
-              <div class="price">
-                <div class="ori_pricee">
-                  原價：$ <span>{{item.ori_price}}</span>
+  <div class="search ">
+    <div class="container wow fadeIn">
+      <div class="result">
+        <p>搜尋：{{context}}</p>
+        <p>找到 {{itemList.length}} 筆搜尋結果</p>
+      </div>
+        <ul v-if="itemList.length >0 ">
+          <li v-for="item in itemList" :key="item._id">
+            <div class="item">
+                <div class="pic mr-3">
+                  <router-link :to="'/detail/'+item._id">
+                  <img :src="item.img" alt="商品圖片">
+                  </router-link>
                 </div>
-                <div class="sale_price">
-                  NT$ <span>{{item.sale_price}}</span>
+
+              <div class="info">
+                <div class="title">
+                  <router-link :to="'/detail/'+item._id">{{item.title}}</router-link>
                 </div>
+                <div class="price">
+                  <div class="ori_pricee">
+                    原價：$ <span>{{item.ori_price}}</span>
+                  </div>
+                  <div class="sale_price">
+                    NT$ <span>{{item.sale_price}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="control_bar">
+                <a href="javascript:;" class="delete" @click="dislike(item._id)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                <a href="javascript:;" class="cart" @click="addCart(item._id)">加入購物車</a>
               </div>
             </div>
-            <div class="control_bar">
-              <a href="javascript:;" class="delete" @click="dislike(item._id)"><i class="fa fa-times" aria-hidden="true"></i></a>
-              <a href="javascript:;" class="cart" @click="addCart(item._id)">加入購物車</a>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div class="nothing" v-else >
-        <h3>空空如也，沒有任何收藏喔！</h3>
-        <img src="https://i.loli.net/2019/07/29/5d3e11fb330b293931.png" alt="">
-      </div>
-      <div class="myToast cart" v-if="toastContent_cart">
-        <p>已將商品加入購物車</p> 
-      </div>
-
-
-
-
-    </Sidebar>
-    <myFooter />
+          </li>
+        </ul>
+        <div class="nothing" v-else >
+          <h3>空空如也，沒有任何收藏喔！</h3>
+          <img src="https://i.loli.net/2019/07/29/5d3e11fb330b293931.png" alt="">
+        </div>
+          <div class="myToast cart" v-if="toastContent_cart">
+          <p>已將商品加入購物車</p> 
+        </div>
+    </div>
+    <MyFooter />
   </div>
+
 </template>
 
 <script>
-import myFooter from '@/components/Footer'
-import Sidebar from '@/components/Sidebar.vue'
+import MyFooter from '@/components/Footer.vue'
 export default {
-   components:{
-    myFooter,Sidebar
+  props:['context'],
+  components: {
+    MyFooter
   },
   data(){
     return {
-      like:this.$store.state.user.like,
-      commodity:this.$store.state.commodity,
-      favoriteList:[],
-      toastContent_cart:false
+      toastContent_cart: false
     }
   },
   methods:{
-    async dislike(id){
-     this.$store.commit('removeUserLike',id)
-        this.$store.dispatch('a_dislike',{
-          user:this.$store.state.user,
-          commodity_id:id
-      })
-      this.favoriteList = this.favoriteList.filter(item=>{
-        return item._id != id
-      })
-    },
-    getList(){
-      let list=[]
-      this.like.forEach(id => {
-        this.commodity.forEach(commodity=>{
-          if(commodity._id == id){
-            list.unshift(commodity)
-          }
-        })
-      });
-      this.favoriteList = list
-    },
     addCart(id){
       //先更新本地端
       this.$store.commit('addCart',{
@@ -103,44 +79,34 @@ export default {
       },1500)
     }
   },
-  beforeMount(){
-    this.getList()
+  computed:{
+    itemList(){
+      return this.$store.state.commodity.filter(item=>{
+        return item.title.indexOf(this.context) != -1
+      })
+    }
   }
+
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/scss/_base.scss';
-.favorite{
-  margin-top: 150px;
-  font-size: 14px;
+@import '../assets/scss/_base.scss';
+.search{
+  margin-top: 200px;
+  font-family: $tw-font;
   .container{
     min-height: 50vh;
   }
-  h1{
-    margin: 0;
-    font-size: 24px;
-    font-weight: 700;
-    text-align: left;
-    color: $primary-color;
-    position: relative;
-    &:before{
-      content: '';
-      position: absolute;
-      left:-12px;
-      top: 3px;
-      width: 4px;
-      height: 1em;
-      background: $primary-color;
-    }
+  .result{
+    display: flex;
+    justify-content: space-between;
   }
   ul{
-    margin-top: 20px;
     list-style: none;
-    padding-inline-start: 0;
-    
   }
 }
+
 //item 樣式
 .item{
       width:100%;

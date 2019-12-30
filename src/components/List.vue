@@ -34,8 +34,8 @@
     <div class="myToast" v-if="toastContent_dislike">
       <p>已取消追蹤</p>
     </div>
-    <div class="myToast" v-if="toastContent_cart">
-      <p>已將商品加入購物車</p>
+    <div class="myToast cart" v-if="toastContent_cart">
+      <p>已將商品加入購物車<br><span v-if="!$store.state.user._id">提醒您：登入後才可保存購物車內的資料</span></p> 
     </div>
     <div class="myToast noFadeOut" v-if="toastContent_login">
       <p>登入後才可以追蹤商品喔</p>
@@ -253,6 +253,22 @@ export default {
       &:hover{
          color: #bbb;
       }
+    }
+  }
+  &.cart{
+    font-size: 18px;
+    line-height: 1.5;
+    padding:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+      margin: 0;
+      padding: 0;
+    }
+    span{
+      font-size: 14px;
+      color: #dedede;
     }
   }
 }

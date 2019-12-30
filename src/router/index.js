@@ -109,6 +109,19 @@ const routes = [{
         component: () =>
             import ('../views/Cart.vue')
     },
+    {
+        path: '/search/:context',
+        name: 'search',
+        props: true,
+        component: () =>
+            import ('../views/Search.vue')
+    }, {
+        path: '/order',
+        name: 'order',
+        props: true,
+        component: () =>
+            import ('../views/account/Order.vue')
+    },
 ]
 
 const router = new VueRouter({
