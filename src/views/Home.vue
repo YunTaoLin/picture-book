@@ -20,12 +20,12 @@
         <CarouselSm :img="carouselImgSm" id="carousel2" />
       </a>
       <div class="row card_group">
-        <a :href="item.link" v-for="item in card" :key="item.title">
+        <router-link :to="item.link" v-for="item in card" :key="item.title">
           <div class="myCard" >
             <img :src="item.img" :alt="item">
             <p>{{item.title}}</p>
           </div>
-        </a>
+        </router-link>
       </div>
       <!--start 特色話語 -->
       <div class="missionary">
@@ -74,10 +74,10 @@ export default {
         'https://www.mocataipei.org.tw/upload/2019_07_083/20190708182202vegzex97D1.jpg'
       ],
       card:[
-        {title:'0~6歲繪本',img:'https://www.ankecare.com/wp-content/uploads/2019/04/%E7%86%9F%E9%BD%A1%E7%B9%AA%E6%9C%AC-03.jpg ', link:'#'},
-        {title:'6~12歲繪本',img:'https://pic.pimg.tw/kadokawa592/1343729901-1190829410.jpg', link:'#'},
-        {title:'青少年繪本',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp2kBSoesFVD7zyaEnplno-r-H-092VtI1nRbMwAnVOnVeGFRNPg&s', link:'#'},
-        {title:'其他精選周邊',img:'https://pic.pimg.tw/zaza1021/1468912413-107059824.jpg', link:'#'}
+        {title:'0~6歲繪本',img:'https://www.ankecare.com/wp-content/uploads/2019/04/%E7%86%9F%E9%BD%A1%E7%B9%AA%E6%9C%AC-03.jpg ', link:'/commodity/elementary'},
+        {title:'6~12歲繪本',img:'https://pic.pimg.tw/kadokawa592/1343729901-1190829410.jpg', link:'/commodity/junior'},
+        {title:'青少年繪本',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp2kBSoesFVD7zyaEnplno-r-H-092VtI1nRbMwAnVOnVeGFRNPg&s', link:'/commodity/senior'},
+        {title:'其他精選周邊',img:'https://pic.pimg.tw/zaza1021/1468912413-107059824.jpg', link:'/commodity/other'}
       ]
 
     }
@@ -151,10 +151,13 @@ export default {
 .card_group{
   margin: 0 -2px;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   a{
-    flex:1;
+    width: calc(25% - 4px);
     margin: 12px 2px;
+    @media (max-width:767px) {
+      width: calc(50% - 4px);
+    }
     &:hover{
       text-decoration: none;
       img{
@@ -165,6 +168,9 @@ export default {
       width: 100%;
       height: 35vh;
       background-color: rgb(240, 235, 228);
+      @media (max-width:425px) {
+        height: 50vw;
+      }
       img{
         width: 100%;
         height: 80%;
@@ -183,7 +189,9 @@ export default {
         margin-bottom: 0;
         color: $secondary-color;
         font-weight: 700;
-        
+        @media (max-width:425px) {
+          font-size: 18px;
+        }
       }
     }
   }

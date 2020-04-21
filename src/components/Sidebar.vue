@@ -10,9 +10,9 @@
         <div class="col-3">
           <h2 class="title">會員相關</h2>
           <ul class="menu">
-            <li><router-link to="/commodity/total">>前往購物車</router-link></li>
+            <li><router-link to="/cart">>前往購物車</router-link></li>
             <li><router-link to="/favorite">>我的收藏</router-link></li>
-            <li><router-link to="/commodity/season">>訂單查詢</router-link></li>
+            <li><router-link to="/order">>訂單查詢</router-link></li>
             <li><router-link to="/profile">>會員資料</router-link></li>
           </ul>
         </div>

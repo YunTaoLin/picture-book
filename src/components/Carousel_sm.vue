@@ -52,10 +52,13 @@ export default {
   height: 55vh ;
   position: relative;
   @media (max-width:1023px) {
-    height: 45vh;
+    height:400px;
   }
   @media (max-width:767px) {
-    height: 35vh;
+    height: 350px;
+  }
+  @media (max-width:575px) {
+    height: 280px;
   }
   img{
     width: 100%;
@@ -83,6 +86,14 @@ export default {
       right: 5%;
       z-index: 1;
       font-family: $tw-font;
+      @media (max-width:575px) {
+        width: 32%;
+        height: 80%;
+      }
+      @media (max-width:425px) {
+        width: 40%;
+        height: 80%;
+      }
       .text1{
         width: 100%;
         height: 40%;
@@ -91,10 +102,18 @@ export default {
         display:flex;
         justify-content: center;
         align-items: center;
+       
         p{
           font-size: 48px;
           font-weight: 700;
           color: #fff;
+          @media (max-width:991px) {
+            font-size: 28px;
+          }
+          @media (max-width:765px) {
+            font-size: 20px;
+          }
+          
         }
       }
       .text2{
@@ -108,6 +127,17 @@ export default {
           font-size: 24px;
           font-weight: 700;
           color: #756566;
+          @media (max-width:991px) {
+            font-size: 18px;
+          }
+          @media (max-width:765px) {
+            font-size: 14px;
+          }
+          @media (max-width:375px) {
+            font-size: 12px;
+          }
+          
+          
         }
       }
       h3{

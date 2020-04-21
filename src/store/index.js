@@ -18,13 +18,15 @@ export default new Vuex.Store({
             totalPrice: 0,
             buy: []
         },
-        orderObjList: []
+        orderObjList: [],
+        //目前正在處理的訂單id
+        nowOrder:''
     },
     mutations: {
         login(state, user) {
             state.user = user
             state.cart = state.cart.concat(user.cart)
-            state.user.cart = state.cart
+            state.user.cart = state.cart.slice(0)
             localStorage.setItem('user', JSON.stringify(user))
             localStorage.setItem('cart', JSON.stringify(state.cart))
         },
@@ -58,6 +60,7 @@ export default new Vuex.Store({
             state.user.tel = data.tel;
             state.user.address = data.address;
             state.user.identity = data.identity;
+            localStorage.setItem('user', JSON.stringify(state.user))
         },
         getCart(state) {
             if (localStorage.getItem('cart')) {
@@ -66,12 +69,11 @@ export default new Vuex.Store({
         },
         addCart(state, data) {
             //先更新暫存購物車
-            console.log('addcart2')
             state.cart.unshift(data)
             localStorage.setItem('cart', JSON.stringify(state.cart))
                 //若有登入，再加入會員購物車
             if (state.user._id) {
-                state.user.cart.unshift(data)
+                state.user.cart = state.cart
                 localStorage.setItem('user', JSON.stringify(state.user))
             }
         },
@@ -91,34 +93,38 @@ export default new Vuex.Store({
             state.checkout.totalPrice = data.totalPrice
             state.checkout.buy = data.buy
         },
-        addOrder(state, data) {
-            state.user.order.push(data)
+        addOrder(state, id) {
+            state.nowOrder = id
+            state.user.order.unshift(id)
             state.user.cart = []
-            state.cart = []
+            state.cart = [] 
             localStorage.setItem('user', JSON.stringify(state.user))
             localStorage.setItem('cart', JSON.stringify(state.cart))
         },
         getOrder(state, data) {
             state.orderObjList.unshift(data)
+        },
+        clearOrderObjList(state){
+          state.orderObjList = []
         }
     },
     actions: {
         a_getCommodity(context) {
-            axios.get('http://127.0.0.1:3000/backstage/getCommodity')
+            axios.get('/backstage/getCommodity')
                 .then(res => {
                     context.commit('getCommodity', res.data.commodity)
                 })
         },
         a_like(context, data) {
-            axios.post('http://127.0.0.1:3000/ajax/like', data)
+            axios.post('/ajax/like', data)
                 .then(() => {})
         },
         a_dislike(context, data) {
-            axios.post('http://127.0.0.1:3000/ajax/dislike', data)
+            axios.post('/ajax/dislike', data)
                 .then(() => {})
         },
         a_updateUser(context, data) {
-            axios.post('http://127.0.0.1:3000/ajax/updateUser', data)
+            axios.post('/ajax/updateUser', data)
                 .then((res) => {
                     if (res.data.err_code == '1') {
                         alert('密碼錯誤')
@@ -128,7 +134,7 @@ export default new Vuex.Store({
                 })
         },
         a_updateCart(context) { //data是會員購物車陣列
-            axios.post('http://127.0.0.1:3000/ajax/updateCart', {
+            axios.post('/ajax/updateCart', {
                     cart: context.state.user.cart,
                     userID: context.state.user._id
                 })
@@ -138,24 +144,39 @@ export default new Vuex.Store({
                     }
                 })
         },
-        a_updateOrder(context) {
-            axios.post('http://127.0.0.1:3000/ajax/updateOrder', {
-                    order: context.state.user.order,
-                    cart: context.state.user.cart,
-                    userID: context.state.user._id
-                })
-                .then((res) => {
-                    if (res.data.err_code == '1') {
-                        alert('伺服器錯誤，請稍後再試')
-                    }
-                })
+        a_addOrder(context,data){
+          // 1.將訂單儲存到訂單資料庫
+          axios.post('/ajax/addOrder', {
+            order: data
+          })
+          .then((res) => {
+            if (res.data.err_code == '1') {
+              return alert('伺服器錯誤，請稍後再試')
+            }else{
+              context.commit('addOrder',res.data.order._id)
+              context.commit('getOrder',res.data.order)
+            //2.更新使用者資料
+              axios.post('/ajax/updateOrder', {
+                  order: context.state.user.order,
+                  cart: context.state.user.cart,
+                  userID: context.state.user._id
+              })
+              .then((res) => {
+                  if (res.data.err_code == '1') {
+                     return alert('伺服器錯誤，請稍後再試')
+                  }
+              })
+            }
+          })
         },
         a_getOrder(context, id) {
-            axios.post('http://127.0.0.1:3000/ajax/getOrder', {
+            axios.post('/ajax/getOrder', {
                     id: id
                 })
                 .then(res => {
+                  if(res.data.order){
                     context.commit('getOrder', res.data.order)
+                  }
                 })
         }
     },

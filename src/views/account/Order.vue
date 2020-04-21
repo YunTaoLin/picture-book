@@ -2,7 +2,7 @@
   <div class="order">
     <Sidebar theTitle="我的訂單">
       <h1>我的訂單</h1>
-      <ul v-if="orderList.length >0 ">
+      <ul v-if="orderList.length">
         <li v-for="item in orderList" :key="item._id">
           <div class="item">
             <ul>
@@ -14,13 +14,14 @@
               <li>付款方式：{{item.pay}}</li>
               <li v-if="item.pay == '郵局轉帳'">轉帳帳號：123-456-789-887</li>
               <li>訂單日期：{{new Date(item.create_time).toLocaleString()}}</li>
+              <li class="status">訂單狀態：{{showStatus(item.status)}}</li>
             </ul>
           </div>
         </li>
       </ul>
       <div class="nothing" v-else >
-        <h3>空空如也，沒有任何收藏喔！</h3>
-        <img src="https://i.loli.net/2019/07/29/5d3e11fb330b293931.png" alt="">
+        <h3>沒有任何訂單喔！快去結帳！</h3>
+        <img src="https://memeprod.s3.ap-northeast-1.amazonaws.com/user-wtf/1573047906706.jpg" alt="">
       </div>
     </Sidebar>
     <myFooter />
@@ -30,6 +31,9 @@
 <script>
 import myFooter from '@/components/Footer'
 import Sidebar from '@/components/Sidebar.vue'
+
+
+
 export default {
    components:{
     myFooter,Sidebar
@@ -38,6 +42,23 @@ export default {
     return {
       orderList:this.$store.state.orderObjList
     }
+  },
+  methods:{
+    //訂單狀態顯示
+    showStatus(status){
+      var res = ''
+      switch (status){
+            case 0 : 
+              res = '訂單處理中'
+              break;
+            case 1 :
+              res = '商品已送出'
+              break;
+            case 2 :
+              res = '訂單已完成' 
+          }
+          return res;
+      }
   }
 }
 </script>
@@ -86,6 +107,10 @@ export default {
   ul{
     text-align: left;
     margin:0;
+  }
+  .status{
+    color: rgb(206, 62, 10);
+    font-weight: 700;
   }
   
 

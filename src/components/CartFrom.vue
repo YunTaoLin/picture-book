@@ -109,9 +109,9 @@ export default {
       if(this.pay == '順豐到付'){
         this.itemList.forEach(item=>{
           if(item.obj.classify == '3'){
-            weight+=1000
+            weight+=1000*item.number
           }else{
-            weight+=475
+            weight+=475*item.number
           }
         })
       }

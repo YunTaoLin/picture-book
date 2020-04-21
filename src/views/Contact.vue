@@ -46,7 +46,7 @@
           </label>
           </div>
           <label for="content">
-            您的留言：
+            您的留言： 
             <textarea name="content" id="content" cols="30" rows="10" v-model.trim="mail.content"></textarea>
           </label>
          <div class="submit">
@@ -141,9 +141,15 @@ export default {
     }
   }
   .contact_inner{
-    height: 65vh;
+    min-height: 65vh;
     padding:0 20%;
     text-align: left;
+    @media (max-width:1023px) {
+      padding:0 12%;
+    }
+    @media (max-width:767px) {
+      padding:0 4%;
+    }
     p{
       font-size: 14px;
     }
@@ -157,21 +163,35 @@ export default {
       }
       input{
         width: 12em;
+        @media (max-width:375px) {
+          width: 240px;
+        }
         &#member{
           width: 2em;
         }
       }
       select{
-        width: 12em
+        width: 12em;
+        @media (max-width:375px) {
+          width: 240px;
+        }
       }
       label{
         margin: 12px 0;
       }
       >label{
         display: flex;
+        flex-wrap: wrap;
       }
       textarea{
-        width: 80%;
+        width: 75%;
+        margin-left: 4px;
+        @media (max-width:425px) {
+          width: 12em;
+        }
+        @media (max-width:375px) {
+          width: 240px;
+        }
       }
       .submit{
         width: 100%;

@@ -48,8 +48,8 @@
 <!-------------- 第四步驟 -------------> 
     <div class="final" v-else-if="step ==4 ">
       <h1>已送出訂單</h1>
-      <h3>訂單編號：{{orderId}}</h3>
-      <h3>轉帳帳號：123-456-789-887</h3>
+      <h3 v-if="this.$store.state.nowOrder">訂單編號：{{this.$store.state.nowOrder}}</h3>
+      <h3 v-if="orderData.pay == '郵局轉帳'">轉帳帳號：123-456-789-887</h3>
       <p>提醒您：可到訂單查詢專區查看您的所有訂單</p>
     </div>
     <myFooter />
@@ -62,7 +62,6 @@ import cartItem from '../components/CartItem.vue'
 import myFooter from '../components/Footer.vue'
 import cartFrom from '../components/CartFrom.vue'
 import sendOrder from '../components/SendOrder.vue'
-import axios from 'axios'
 export default {
   components:{
     cartItem,myFooter,cartFrom,sendOrder
@@ -71,8 +70,7 @@ export default {
     return {
       idList:this.$store.state.cart,
       step:1,
-      orderData:{},
-      orderId : ''
+      orderData:{}
     }
   },
   methods:{
@@ -83,7 +81,6 @@ export default {
     },
     selectAll(){
       if(this.totalChecked){
-        // console.log('這時我要全關閉')
         this.idList.forEach(item => {
           item.checked=false
         });
@@ -99,21 +96,8 @@ export default {
       this.orderData = e;
       this.step=3
     },
-    async addOrder(e){
-      // 1.將訂單儲存到訂單資料庫
-      await axios.post('http://127.0.0.1:3000/ajax/addOrder', {
-        order: e
-      })
-      .then((res) => {
-        console.log(res)
-        if (res.data.err_code == '1') {
-          return alert('伺服器錯誤，請稍後再試')
-        }
-        this.orderId = res.data.order._id
-      })
-      // 2.將訂單id加進會員資料庫，並清空購物車
-      this.$store.commit('addOrder',this.orderId)
-      this.$store.dispatch('a_updateOrder')
+    addOrder(e){
+      this.$store.dispatch('a_addOrder',e)
       // 3.顯示畫面
       this.step=4
     }

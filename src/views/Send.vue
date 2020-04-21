@@ -46,7 +46,7 @@ export default {
   }
 }
 .send_info{
-  height: 60vh;
+  min-height: 60vh;
   li{
     text-align: left;
     line-height: 2;

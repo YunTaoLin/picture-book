@@ -96,7 +96,6 @@ export default {
       }
     },
     showToast(e){
-      console.log(e)
       if(e == 1){
         this.toastContent_like = false;
         this.toastContent_like = true;

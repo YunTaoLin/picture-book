@@ -2,11 +2,11 @@
   <div class="story wow fadeIn">
     <div class="container">
       <div class="row">
-        <div class="col-sm-6 col-12">
+        <div class="col-lg-6 col-sm-7 col-12">
           <h2>我們的故事</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis earum molestias veniam, suscipit itaque omnis ea rerum, quasi enim reiciendis, praesentium adipisci unde. Cupiditate officiis porro vero rem, hic voluptatibus. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim asperiores velit aliquid vitae quibusdam.</p>
         </div>
-        <div class="col-sm-6 col-12">
+        <div class="col-lg-6 col-sm-5 offset-sm-0 col-8 offset-2 d-flex align-items-center">
           <img src="https://www.smohouse.com/books/wp-content/uploads/2017/05/sinter-slide-1024x416.jpg" alt="介紹圖片">
         </div>
       </div>
@@ -17,14 +17,14 @@
         </div>
       <div class="container">
           <div class="row">
-            <div class="col-sm-6 col-12">
-            <div class="pic">
-              <img src="../assets/fang - 複製.png" alt="介紹圖片">
-            </div>
-            <p class="founder_name"> <span>方方繪本創辦人</span> - 方柏翰 先生</p>
-            </div>
-            <div class="col-sm-6 col-12">
+            <div class="col-lg-6 offset-lg-0 col-sm-7 offset-sm-1 col-12 ">
               <p class="founder_info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis earum molestias veniam, suscipit itaque omnis ea rerum, quasi enim reiciendis, praesentium adipisci unde. Cupiditate officiis porro vero rem, hic voluptatibus. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim asperiores velit aliquid vitae quibusdam, nihil eos eveniet architecto nulla cum min.</p>
+            </div>
+            <div class="col-lg-6 col-sm-4 col-12 order-sm-first ">
+              <div class="pic">
+                <img src="../assets/fang - 複製.png" alt="介紹圖片">
+              </div>
+              <p class="founder_name"> <span>方方繪本創辦人</span> - 方柏翰 先生</p>
             </div>
           </div>
           <div class="col-12 mt-5">
@@ -74,6 +74,9 @@ export default {
         font-size: 18px;
         text-align: center;
         font-weight: 700;
+        @media (max-width:575px) {
+          font-size: 15px;
+        }
       }
       &.founder_info{
         height: 100%;
@@ -91,6 +94,11 @@ export default {
       img{
         width: 300px;
       }
+      @media (max-width: 767px) {
+        img{
+        width: 200px;
+        }
+      }
     }
   }
 
@@ -102,6 +110,11 @@ export default {
     width: 50vw;
     position: absolute;
     top: -7vh;
+    @media (max-width:575px) {
+      top: auto;
+      width: 100vw;
+      bottom: 48%;
+    }
 
   }
 }
@@ -110,6 +123,9 @@ export default {
 .history{
   margin: 120px auto -27vh;
   width: 100%;
+  @media (max-width:1200px) {
+    margin: 120px auto -15vh;
+  }
   h3{
     width: 100%;
     text-align: center;

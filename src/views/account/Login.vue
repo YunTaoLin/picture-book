@@ -92,15 +92,14 @@ export default {
       if(!this.login.email) return alert('請輸入email');
       if(!this.login.password) return alert('請輸入密碼');
       this.loading=true;
-       $.ajax({
-        url: 'http://127.0.0.1:3000/ajax/login',
+      $.ajax({
+        url: '/ajax/login',
         type: 'post',
         datatype: 'json',
         crossDomain: true,        
         data: this.login
       }).done((res)=> {
         this.loading=false;
-        console.log(res)
         if(res.err_code==0){
           alert('歡迎回來'+res.user.firstname+'！')
           if(this.$store.state.cart.length>0){
@@ -108,20 +107,21 @@ export default {
               this.$store.commit('removeCart')
             }
           }
+          //同步儲存完使用者資料，再非同步取得訂單列表
           this.$store.commit('login',res.user)
           this.$store.dispatch('a_updateCart')
-          this.$store.state.user.order.forEach(item => {
-            console.log('查詢一次')
-            this.$store.dispatch('a_getOrder',item)
-          });
+          if(this.$store.state.user.order){
+             this.$store.state.user.order.forEach(orderID => {
+              this.$store.dispatch('a_getOrder',orderID)
+              });
+          }
           this.$router.go(-1)
         }else if(res.err_code==1){
           alert('帳號或密碼錯誤')
         }else{
           alert('伺服器忙線中，請稍後再試')
         }
-      }).fail((err)=> {
-        console.log('失敗了'+err)
+      }).fail(()=> {
         this.loading=false;
       })
     },
@@ -132,14 +132,13 @@ export default {
       if(this.registered.password.length < 5) return alert('密碼需要6位以上');
       this.loading=true;
       $.ajax({
-        url:'http://127.0.0.1:3000/ajax/login',
+        url:'/ajax/registered',
         type: 'post',
         datatype: 'json',
         crossDomain: true,        
         data: this.registered
       }).done((res) =>{
         this.loading=false;
-        console.log(res)
         if(res.err_code==0){
           this.$store.commit('login',res.user)
           localStorage.setItem('user',JSON.stringify(res.user))

@@ -229,6 +229,9 @@ export default {
       display: flex;
       flex-direction: column;
       padding-top: 8px;
+      @media (max-width: 1200px) {
+        padding-right:20px;
+      }
       .userbar{
         display: flex;
         justify-content: flex-end;
@@ -262,7 +265,7 @@ export default {
 .cart_control{
   position: relative;
   &:hover{
-    ul{
+    >ul{
       opacity: 1;
       visibility: visible;
     }
@@ -340,6 +343,9 @@ export default {
 .search_bar{
   padding-left: 80px;
   padding-top: 4px;
+  @media (max-width:1200px) {
+    padding-left: 20px;
+  }
   .search_form{
     display: flex;
     align-items: center;

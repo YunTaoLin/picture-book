@@ -97,7 +97,6 @@ export default {
     },
     addCart(){
       //先更新本地端
-      console.log('addcart')
       this.$store.commit('addCart',{
         id:this.commodity._id,
         number:1,
