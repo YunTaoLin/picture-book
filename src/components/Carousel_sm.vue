@@ -4,17 +4,19 @@
         <li :data-target="'#'+id"  :data-slide-to="index" :class="{active: index==0}" v-for="(item,index) in img" :key="item"></li>
       </ol>
       <div class="carousel-inner">
-        <div class="carousel-item" :class="{active: index==0}" v-for="(item,index) in img" :key="item">
-          <img :src="item" class="d-block w-100" alt="輪播圖片">
-          <div class="inner-text">
-            <div class="text1">
-              <p>熱銷商品</p>
-            </div>
-            <div class="text2">
-              <p>方方繪本精選<br>年度排行榜熱銷商品</p>
+        <router-link to="/commodity/total">
+          <div class="carousel-item" :class="{active: index==0}" v-for="(item,index) in img" :key="item"> 
+            <img :src="item" class="d-block w-100" alt="輪播圖片">
+            <div class="inner-text">
+              <div class="text1">
+                <p>熱銷商品</p>
+              </div>
+              <div class="text2">
+                <p>方方繪本精選<br>年度排行榜熱銷商品</p>
+              </div>
             </div>
           </div>
-        </div>
+        </router-link>
       </div>
       <a class="carousel-control-prev" :href="'#'+id" role="button" data-slide="prev">
         <div class="btn-box">

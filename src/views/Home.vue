@@ -8,9 +8,9 @@
         <div class="row">
           <div class="col-4" v-for="item in topicImg" :key="item">
             <img :src="item" alt="圖片">
-            <a href="#" class="topic_inner">
+            <router-link to="/commodity/season" class="topic_inner">
               <p>聖誕精選商品</p>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>
