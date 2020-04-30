@@ -12,7 +12,7 @@
     "bootstrap": "^4.4.1",
     "core-js": "^3.4.3",
     "eslint": "^6.7.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.16.0",
     "sass-resources-loader": "^2.0.1",
     "vue": "^2.6.10",
