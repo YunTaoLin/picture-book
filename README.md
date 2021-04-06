@@ -17,3 +17,16 @@
 
 ## 網站入口
 [點此進入](http://172.105.215.182:3000/)
+
+## 部分截圖
+前台首頁
+![前台](https://i.imgur.com/c2kzQiL.png)
+
+賣場
+![賣場](https://i.imgur.com/d7LjKEC.png)
+
+登入頁面
+![登入](https://i.imgur.com/VzyBhID.png)
+
+後台管理系統
+![後台管理系統](https://i.imgur.com/DhX35uy.png)
